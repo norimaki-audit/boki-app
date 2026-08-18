@@ -71,7 +71,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const lastLearn = useRef<View>('scnList');
   const toastT = useRef<number | undefined>(undefined);
   const celebT = useRef<number | undefined>(undefined);
-  const guideT = useRef<number | undefined>(undefined);
   const pulseT = useRef<number | undefined>(undefined);
   const mockT = useRef<number | undefined>(undefined);
   const guideKey = useRef<string | null>(null);
@@ -362,17 +361,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         : S.view;
     if (guideKey.current === key) return;
     guideKey.current = key;
-    const autoClose = () => {
-      window.clearTimeout(guideT.current);
-      guideT.current = window.setTimeout(() => {
-        const g = stateRef.current.guide;
-        if (g.open && (g.kind === 'idle' || g.kind === 'intro')) set({ guide: { open: false, kind: 'idle' } });
-      }, 7000);
-    };
     if (!S.guideSeen.intro) {
       const guideSeen = { ...S.guideSeen }; guideSeen.intro = true; guideSeen[key] = true;
       persist({ guideSeen, guide: { open: true, kind: 'intro' } });
-      autoClose();
     } else if (!S.guideSeen[key]) {
       const guideSeen = { ...S.guideSeen }; guideSeen[key] = true;
       set({ guideSeen, guidePulse: true });
@@ -383,10 +374,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   });
 
+  /* 初回案内は7秒で自動的に縮小する。開いている間だけタイマーを張るので、
+   * 再マウント（開発時の StrictMode の二重実行を含む）でも張り直される。 */
+  const guide = stateRef.current.guide;
+  useEffect(() => {
+    if (!guide.open || guide.kind !== 'intro') return;
+    const t = window.setTimeout(() => {
+      const g = stateRef.current.guide;
+      if (g.open && (g.kind === 'idle' || g.kind === 'intro')) set({ guide: { open: false, kind: 'idle' } });
+    }, 7000);
+    return () => window.clearTimeout(t);
+  }, [guide.open, guide.kind, set]);
+
   useEffect(() => () => {
     window.clearTimeout(toastT.current);
     window.clearTimeout(celebT.current);
-    window.clearTimeout(guideT.current);
     window.clearTimeout(pulseT.current);
     window.clearInterval(mockT.current);
   }, []);

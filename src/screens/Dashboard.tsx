@@ -145,9 +145,13 @@ export default function Dashboard() {
   };
   const onResetAll = () => {
     if (window.confirm('学習データ（仕訳・進捗・誤答履歴）をすべてリセットします。よろしいですか？')) {
+      /* 文言どおり「すべて」消す：誤答履歴・ドリル・基礎レッスン・復習状況も対象
+       * （プロトタイプはこれらが残る実装だったが、確認文とヘルプの説明に合わせている） */
       api.persist({
         entries: openingEntries(), completed: [], attempts: {}, flash: [], view: 'dash', sid: null,
-        judged: null, xp: 0, badges: {}, combo: 0, comboExam: 0, writePosts: 0
+        judged: null, xp: 0, badges: {}, combo: 0, comboExam: 0, writePosts: 0,
+        wrongLog: {}, drillDone: {}, lessons: {}, lessonId: null, lessonQuizPick: {},
+        reviewDone: null, briefSeen: {}, briefOff: false, drillId: null, drillJudged: null, mock: null
       });
     }
   };
