@@ -1,0 +1,48 @@
+:root {
+  /* audit-sampling-tool / jsox-flow-builder migration aliases */
+  --c-primary: var(--action-primary);
+  --c-primary-d: var(--action-primary-hover);
+  --c-primary-tint: var(--brand-50);
+  --c-primary-bd: var(--brand-200);
+
+  --c-bg: var(--surface-page);
+  --c-surface: var(--surface-card);
+  --c-surface-2: var(--surface-muted);
+  --c-border: var(--border-default);
+  --c-line: var(--border-subtle);
+
+  --c-text: var(--text-primary);
+  --c-text-mid: var(--text-secondary);
+  --c-text-faint: var(--text-muted);
+
+  --c-ok: var(--success);
+  --c-ok-bg: var(--success-surface);
+  --c-ok-bd: var(--success-border);
+  --c-warn: var(--warning);
+  --c-warn-bg: var(--warning-surface);
+  --c-warn-bd: var(--warning-border);
+  --c-err: var(--danger);
+  --c-err-bg: var(--danger-surface);
+  --c-err-bd: var(--danger-border);
+  --c-info: var(--info);
+  --c-info-bg: var(--info-surface);
+  --c-info-bd: var(--info-border);
+
+  --bg: var(--surface-page);
+  --panel: var(--surface-card);
+  --panel-2: var(--surface-muted);
+  --line: var(--border-default);
+  --line-strong: var(--border-strong);
+  --ink: var(--text-primary);
+  --text: var(--text-primary);
+  --muted: var(--text-secondary);
+  --accent: var(--action-primary);
+  --accent-ink: var(--action-primary-hover);
+  --accent-weak: var(--brand-50);
+  --acc: var(--action-primary);
+
+  --r-card: var(--radius-panel);
+  --r-ctrl: var(--radius-control);
+  --shadow: var(--shadow-none);
+  --ease: var(--duration-normal) var(--ease-standard);
+}

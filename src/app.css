@@ -1,0 +1,117 @@
+/* プロトタイプ <helmet> 内の追加スタイル。トークンとコンポーネントCSSは norimaki.css 側が唯一の真実。 */
+@import url('./styles/norimaki.css');
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+}
+
+::selection {
+  background: var(--brand-100);
+}
+
+:root {
+  --font-mono: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.bfl-bubble {
+  max-width: 17rem;
+  background: var(--surface-card);
+  border: 1px solid var(--brand-300);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-dialog);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bfl-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(24rem, 100vw);
+  background: var(--surface-card);
+  border-left: 1px solid var(--border-default);
+  box-shadow: var(--shadow-dialog);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  overflow-y: auto;
+  z-index: 120;
+}
+
+@media (max-width: 640px) {
+  .bfl-drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    max-height: 70vh;
+    border-left: 0;
+    border-top: 1px solid var(--border-default);
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+  }
+}
+
+@keyframes bfl-pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bfl-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+
+.bfl-pulse {
+  animation: bfl-pulse 0.9s ease-in-out 3;
+}
+
+.bfl-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bfl-link:hover {
+  background: var(--surface-muted);
+}
+
+.nm-btn,
+.nm-badge,
+.nm-tab {
+  white-space: nowrap;
+}
+
+.bfl-tab-home {
+  color: var(--brand-800);
+}
+
+.bfl-tab-sep {
+  margin-left: var(--space-4);
+  position: relative;
+}
+
+.bfl-tab-sep::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--space-2) * -1);
+  top: 28%;
+  bottom: 28%;
+  border-left: 1px solid var(--border-default);
+}
+
+/* プロトタイプの style-hover 属性に相当するホバー表現 */
+.bfl-hv-border:hover {
+  border-color: var(--brand-500);
+}
+
+.bfl-hv-row:hover {
+  border-color: var(--brand-500);
+  background: var(--brand-50);
+}
+
+.bfl-hv-bg:hover {
+  background: var(--brand-50);
+}
