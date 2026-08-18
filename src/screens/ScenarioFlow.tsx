@@ -18,6 +18,12 @@ export default function ScenarioFlow() {
   const guideScn = S.guideOn && !exam;
   const attemptCount = S.attempts[S.sid] || 0;
   const learnPos = Math.max(1, p.seq.findIndex(x => x.id === S.sid) + 1);
+  /* 「学習 n件目」は順路どおりに進んでいるときの現在地。レッスンからの参照や復習で
+   * 別の取引へ寄り道したときは件目を出さず、寄り道であることを示す。 */
+  const isDone = S.completed.indexOf(S.sid) >= 0;
+  const isNextInSeq = p.remaining.length > 0 && p.remaining[0].id === S.sid;
+  const contextLabel = S.scnFrom === 'lesson' ? 'レッスンから'
+    : (S.scnFrom === 'review' || isDone) ? '復習' : null;
   const hudMb = S.mode === 'write' ? 20 : exam ? 30 : 0;
 
   const stepDefs: [number, string][] = exam
@@ -44,8 +50,11 @@ export default function ScenarioFlow() {
     <section data-screen-label="取引シナリオ学習" style={css('display:grid;gap:var(--space-4)')}>
       <div style={css('display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap')}>
         <button className="nm-btn nm-btn--tertiary nm-btn--sm" onClick={() => api.set({ view: 'scnList' })}>← 取引一覧</button>
-        <h1 className="nm-page-title">学習 {learnPos}件目／{p.total}　{scn.title}</h1>
+        <h1 className="nm-page-title">
+          {isNextInSeq ? '学習 ' + learnPos + '件目／' + p.total + '　' : ''}{scn.title}
+        </h1>
         <span className="nm-badge">取引No.{scn.order}</span>
+        {contextLabel && <span className="nm-badge nm-badge--warning">{contextLabel}</span>}
         <span className="nm-badge">20X6年{scn.date}</span>
         <span className="nm-badge nm-badge--brand">日商簿記{scn.level}</span>
         {attemptCount > 0 && <span className="nm-badge nm-badge--warning">誤答 {attemptCount} 回</span>}

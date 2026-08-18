@@ -9,6 +9,9 @@ export type Mode = 'understand' | 'write' | 'exam';
 
 export type SubTab = 'ar' | 'ap' | 'fa';
 
+/** 取引フローをどこから開いたか。見出しの「学習 n件目」を出すかの判断に使う。 */
+export type ScnFrom = 'lesson' | 'review' | null;
+
 export interface Judged {
   correct: boolean;
   incomplete?: boolean;
@@ -71,6 +74,7 @@ export interface AppState {
   ready: boolean;
   view: View;
   sid: string | null;
+  scnFrom: ScnFrom;
   step: number;
   anaPick: number;
   anaMsg: string | null;

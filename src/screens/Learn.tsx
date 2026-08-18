@@ -126,7 +126,7 @@ export default function Learn() {
                 key={sid}
                 className="bfl-link"
                 style={css('border:0;background:transparent;padding:0;cursor:pointer;font-size:var(--font-size-label);color:var(--brand-700)')}
-                onClick={() => api.startScenario(sid)}
+                onClick={() => api.startScenario(sid, 'lesson')}
               >{SCN[sid] ? '取引で確かめる：' + SCN[sid].title : sid} →</button>
             ))}
           </div>

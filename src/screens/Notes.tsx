@@ -39,7 +39,7 @@ export default function Notes() {
               <button
                 className="nm-btn nm-btn--secondary nm-btn--sm"
                 style={css('min-height:2.75rem')}
-                onClick={() => { if (n.kind === 'drill') api.openDrill(n.id, true); else api.startScenario(n.id); }}
+                onClick={() => { if (n.kind === 'drill') api.openDrill(n.id, true); else api.startScenario(n.id, 'review'); }}
               >もう一度解く</button>
             </div>
           </div>

@@ -5,12 +5,12 @@ import type { ReactNode } from 'react';
 import * as B from '../engine/engine';
 import type { DrillItem, Entry, Impact, Scenario } from '../engine/types';
 import { BADGES, STORAGE_KEY } from './content';
-import type { AppState, MockState, SavedState, View, WrongEntry } from './types';
+import type { AppState, MockState, SavedState, ScnFrom, View, WrongEntry } from './types';
 
 const emptyDrillForm = () => ({ dLines: [{ acc: '', amt: '' }], cLines: [{ acc: '', amt: '' }] });
 
 const initialState = (): AppState => ({
-  ready: false, view: 'dash', sid: null, step: 1,
+  ready: false, view: 'dash', sid: null, scnFrom: null, step: 1,
   anaPick: -1, anaMsg: null,
   form: { dAcc: '', dAmt: '', cAcc: '', cAmt: '', sub: '' },
   judged: null, entries: [], completed: [], attempts: {},
@@ -30,7 +30,8 @@ export interface Api {
   award(id: string): void;
   judge(): void;
   post(): void;
-  startScenario(sid: string): void;
+  /** from: 'lesson' はレッスンからの参照、'review' は復習。順路どおりの学習は省略する。 */
+  startScenario(sid: string, from?: ScnFrom): void;
   gotoImpact(imp: Impact, scn: Scenario): void;
   startMock(): void;
   mockAnswer(): void;
@@ -115,12 +116,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     toastT.current = window.setTimeout(() => set({ toast: null }), 4000);
   }, [persist, set]);
 
-  const startScenario = useCallback((sid: string) => {
+  const startScenario = useCallback((sid: string, from: ScnFrom = null) => {
     const S = stateRef.current;
     const done = S.completed.indexOf(sid) >= 0;
     const draft = S.entries.find(e => e.id === 'e-' + sid && e.status === 'draft');
     set({
-      view: 'scn', sid, step: done ? 5 : draft ? 4 : 1, anaPick: -1, anaMsg: null, judged: null,
+      view: 'scn', sid, scnFrom: from, step: done ? 5 : draft ? 4 : 1, anaPick: -1, anaMsg: null, judged: null,
       trace: [], wroteDone: false, calcVals: {}, whyPick: -1,
       form: { dAcc: '', dAmt: '', cAcc: '', cAmt: '', sub: '' }
     });

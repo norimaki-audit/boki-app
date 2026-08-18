@@ -123,7 +123,7 @@ export default function Dashboard() {
 
   const openWrong = (kind: 'scn' | 'drill', id: string) => {
     if (kind === 'drill') api.openDrill(id, true);
-    else api.startScenario(id);
+    else api.startScenario(id, 'review');
   };
 
   const taskSummary = p.remaining.length === 0
