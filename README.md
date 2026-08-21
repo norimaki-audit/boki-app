@@ -83,6 +83,51 @@ lessons / briefSeen / briefOff。
 ビルド時に `BASE_PATH=/boki-app/` を渡しています。`public/` の画像は
 [src/lib/asset.ts](src/lib/asset.ts) の `asset()` 経由で参照し、配置先が変わっても解決できるようにしています。
 
+## アプリとして配信する（Capacitor）
+
+同じビルド成果物（`dist/`）をネイティブアプリの WebView に載せて、App Store / Google Play へ
+配信できます。会計エンジンと画面はそのまま流用し、WebViewで動かない部分だけを差し替えています。
+
+| 機能 | ブラウザ | ネイティブ |
+| --- | --- | --- |
+| 学習データの保存 | localStorage | Capacitor Preferences（端末のネイティブ保存領域） |
+| A4 仕訳・計算用紙 | 別ウィンドウで `window.print()` | HTMLを書き出してOSの共有シート（印刷・保存） |
+| 学習成果カードPNG | `<a download>` | 画像を書き出してOSの共有シート |
+
+分岐は [src/lib/platform.ts](src/lib/platform.ts) の `isNative()` 1か所に集約し、保存は
+[src/lib/storage.ts](src/lib/storage.ts)、ファイル書き出しは [src/lib/nativeFile.ts](src/lib/nativeFile.ts)
+にまとめてあります。画面側のコードはブラウザ版と共通です。
+
+### Android
+
+必要なもの：JDK 17 と Android Studio（Android SDK・エミュレータ）。Windowsのままビルドできます。
+
+```bash
+npm run cap:sync
+```
+
+```bash
+npm run android:open
+```
+
+Android Studio が開いたら Run（▶）で実機・エミュレータへインストールできます。
+
+### iOS
+
+必要なもの：macOS・Xcode・CocoaPods。`ios/` はMac側で生成します。
+
+```bash
+npm run ios:add && npm run cap:sync && npm run ios:open
+```
+
+### ストア提出時に用意するもの
+
+- Apple Developer Program（年 $99）／ Google Play Console（初回 $25）
+- アプリアイコン・スクリーンショット・プライバシーポリシーURL
+- プライバシー表示は「データを収集しません」（本アプリは端末内で完結し、送信も収集も行いません）
+- App Store のガイドライン 4.2（単なるWebサイトの再パッケージは不可）に備え、
+  オフラインで完結する学習機能であることを説明できるようにしておく
+
 ## 出典
 
 本実装は、別途用意したデザインハンドオフ（HTMLプロトタイプ・デザイントークン・

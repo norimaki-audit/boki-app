@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
 import type { ReactNode } from 'react';
 import * as B from '../engine/engine';
+import { loadRaw, saveRaw } from '../lib/storage';
 import type { DrillItem, Entry, Impact, Scenario } from '../engine/types';
 import { BADGES, STORAGE_KEY } from './content';
 import type { AppState, MockState, SavedState, ScnFrom, View, WrongEntry } from './types';
@@ -63,7 +64,7 @@ function save(S: AppState): void {
     guideSeen: { intro: !!S.guideSeen.intro }, companyName: S.companyName, wrongLog: S.wrongLog,
     reviewDone: S.reviewDone, lessons: S.lessons, briefSeen: S.briefSeen, briefOff: S.briefOff
   };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { /* 保存不可でも学習は継続できる */ }
+  saveRaw(STORAGE_KEY, JSON.stringify(data));
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -290,8 +291,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   /* ---------- 初期化（保存データの読み込みと過去データの救済） ---------- */
   useEffect(() => {
-    let saved: Partial<SavedState> | null = null;
-    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { saved = null; }
+    let cancelled = false;
+    void (async () => {
+      let saved: Partial<SavedState> | null = null;
+      try { saved = JSON.parse((await loadRaw(STORAGE_KEY)) || 'null'); } catch { saved = null; }
+      if (cancelled) return;
+      init(saved);
+    })();
+    return () => { cancelled = true; };
+    // 初期化は1度だけ
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /** 保存データの読み込みと、過去データからのXP・バッジ・誤答履歴の再計算 */
+  function init(saved: Partial<SavedState> | null) {
     const today = new Date().toISOString().slice(0, 10);
     let streak = (saved && saved.streak) || { last: null, count: 0 };
     if (streak.last !== today) {
@@ -349,9 +362,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       companyName: (saved && saved.companyName) || null,
       tests: B.runTests()
     });
-    // 初期化は1度だけ
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }
 
   /* ---------- カモ先輩の自動表示（初回・画面切替時のパルス） ---------- */
   useEffect(() => {

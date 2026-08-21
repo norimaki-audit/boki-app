@@ -1,5 +1,7 @@
 /** SNS共有カードの PNG 書き出し（canvas 1200×675 / 1080×1080）。プロトタイプ downloadShareCard() の移植。 */
 import { COMPANY, SCENARIOS, metrics } from '../engine/engine';
+import { blobToBase64, shareBinary } from './nativeFile';
+import { isNative } from './platform';
 import type { AppState } from '../state/types';
 
 export function downloadShareCard(S: AppState, format: 'wide' | 'square'): void {
@@ -36,11 +38,17 @@ export function downloadShareCard(S: AppState, format: 'wide' | 'square'): void 
   x.fillText('学習進捗 ' + done + ' / ' + total + '　達成率 ' + Math.round(done / total * 100) + '%　バッジ ' + Object.keys(S.badges).length + '/10', pad, by);
   x.fillStyle = '#9fc5bf'; x.font = '26px ' + jp; x.textAlign = 'right';
   x.fillText('#簿記 #日商簿記3級', W - pad, by); x.textAlign = 'left';
+  const fileName = 'bookkeeping-flow-' + (sq ? 'square' : 'wide') + '.png';
   c.toBlob(b => {
     if (!b) return;
+    if (isNative()) {
+      /* WebView では <a download> が効かないので、書き出してOSの共有シートへ渡す */
+      void blobToBase64(b).then(base64 => shareBinary(fileName, base64, '学習成果カード'));
+      return;
+    }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(b);
-    a.download = 'bookkeeping-flow-' + (sq ? 'square' : 'wide') + '.png';
+    a.download = fileName;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 5000);
   }, 'image/png');
