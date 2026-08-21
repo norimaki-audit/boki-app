@@ -1,6 +1,7 @@
 /* カモ先輩アシスタント：常駐ヘルプ兼状況ガイド。
  * 自動で開くのは初回・誤答・達成時のみ（ストア側の効果）。ネット試験モードではカモを隠し「操作ヘルプ」になる。 */
 import { ACC, DACC, DRILLS, SCN } from '../engine/engine';
+import { DUCK_EXPLAINING, DUCK_STRUGGLING, asset } from '../lib/asset';
 import { css } from '../lib/css';
 import {
   DASH_QA, DATA_TEXT, DRILL_QA, FS_QA, GLOSSARY, LEDGER_QA, SCN_QA
@@ -207,7 +208,7 @@ export default function DuckAssistant() {
             style={css('width:3.5rem;height:3.5rem;border-radius:50%;border:2px solid var(--brand-300);background:var(--surface-card);padding:0;cursor:pointer;box-shadow:var(--shadow-dialog);overflow:hidden;flex:none;display:block')}
           >
             <img
-              src={gk === 'wrong' ? '/assets/duck-guide-struggling.png' : '/assets/duck-guide-explaining.png'}
+              src={asset(gk === 'wrong' ? DUCK_STRUGGLING : DUCK_EXPLAINING)}
               alt=""
               width={1254}
               height={1254}

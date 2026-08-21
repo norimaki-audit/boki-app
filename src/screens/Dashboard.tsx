@@ -1,6 +1,7 @@
 /* ダッシュボード（学習の拠点）。「今日の学習」→「仕訳の結果」→「学習プロフィール」の3本立て。 */
 import { ACC, COMPANY, DRILLS, balance, openingEntries } from '../engine/engine';
 import type { Entry } from '../engine/types';
+import { DUCK_EXPLAINING, asset } from '../lib/asset';
 import { css, cssWith } from '../lib/css';
 import { fmt, todayStr } from '../lib/format';
 import { printWorksheet } from '../lib/print';
@@ -218,7 +219,7 @@ export default function Dashboard() {
         <div style={css('display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap')}>
           {S.guideOn && (
             <img
-              src="/assets/duck-guide-explaining.png"
+              src={asset(DUCK_EXPLAINING)}
               alt="カモ先輩 — 簿記学習ガイド"
               width={1254}
               height={1254}

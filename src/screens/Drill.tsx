@@ -1,6 +1,7 @@
 /* 論点別ドリル。1問1答（帳簿には登録しない）。複合仕訳は各側最大4行。 */
 import DrillLines from '../components/DrillLines';
 import { DRILLS, validateDrill } from '../engine/engine';
+import { DUCK_EXPLAINING, asset } from '../lib/asset';
 import { css } from '../lib/css';
 import { allDrillItems } from '../state/derive';
 import { useApp } from '../state/store';
@@ -49,7 +50,7 @@ export default function Drill() {
       <div style={css('display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap')}>
         {S.guideOn && (
           <img
-            src="/assets/duck-guide-explaining.png" alt="" width={56} height={56} loading="lazy" decoding="async"
+            src={asset(DUCK_EXPLAINING)} alt="" width={56} height={56} loading="lazy" decoding="async"
             style={css('width:3.5rem;height:3.5rem;border-radius:50%;object-fit:cover;flex:none')}
             onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
@@ -153,7 +154,7 @@ export default function Drill() {
                 <div style={css('display:flex;gap:var(--space-2);align-items:center;margin-bottom:var(--space-1)')}>
                   {S.guideOn && (
                     <img
-                      src="/assets/duck-guide-explaining.png" alt="" width={32} height={32} loading="lazy" decoding="async"
+                      src={asset(DUCK_EXPLAINING)} alt="" width={32} height={32} loading="lazy" decoding="async"
                       style={css('width:2rem;height:2rem;border-radius:50%;object-fit:cover;flex:none')}
                       onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                     />

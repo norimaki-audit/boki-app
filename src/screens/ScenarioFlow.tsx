@@ -1,6 +1,7 @@
 /* 取引フロー（5ステップ）。①証憑確認 → ②取引分析 → ③仕訳入力 → ④仕訳プレビュー → ⑤登録完了。
  * 3学習モード：理解 / 書いて覚える（紙に書く→転記）/ ネット試験入力（分析スキップ・カモ非表示）。 */
 import { ACC, ACCOUNTS, CUSTOMERS, SCN, VENDORS, metrics } from '../engine/engine';
+import { DUCK_EXPLAINING, DUCK_STRUGGLING, asset } from '../lib/asset';
 import { css, cssWith } from '../lib/css';
 import { fmt, fmtIn, yen } from '../lib/format';
 import { printWorksheet } from '../lib/print';
@@ -212,7 +213,7 @@ export default function ScenarioFlow() {
           </div>
           {guideScn && (
             <img
-              src="/assets/duck-guide-struggling.png" alt="" width={1254} height={1254} loading="lazy" decoding="async"
+              src={asset(DUCK_STRUGGLING)} alt="" width={1254} height={1254} loading="lazy" decoding="async"
               style={css('width:clamp(4.5rem,9vw,7rem);height:auto;aspect-ratio:1/1;object-fit:contain;border-radius:var(--radius-lg);flex:none')}
               onError={imgErr}
             />
@@ -325,7 +326,7 @@ export default function ScenarioFlow() {
             <div style={css('display:flex;gap:var(--space-2);align-items:center;margin-bottom:var(--space-1)')}>
               {guideScn && (
                 <img
-                  src="/assets/duck-guide-explaining.png" alt="" width={32} height={32} loading="lazy" decoding="async"
+                  src={asset(DUCK_EXPLAINING)} alt="" width={32} height={32} loading="lazy" decoding="async"
                   style={css('width:2rem;height:2rem;border-radius:50%;object-fit:cover;flex:none')} onError={imgErr}
                 />
               )}

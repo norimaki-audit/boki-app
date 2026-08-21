@@ -3,5 +3,6 @@ dist/
 *.local
 .DS_Store
 
-# 元のハンドオフzip（展開済みの design_handoff_shiwake_no_sakie/ を正とする）
+# 元のデザインハンドオフ一式（ローカル参照用。公開リポジトリには含めない）
 *.zip
+design_handoff_shiwake_no_sakie/
