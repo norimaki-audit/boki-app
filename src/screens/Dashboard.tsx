@@ -185,10 +185,10 @@ export default function Dashboard() {
         <div className="nm-page-header__meta"><span>{COMPANY.period}</span></div>
       </div>
 
-      <div style={css('display:grid;gap:var(--space-2)')}>
-        <div style={css('display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap')}>
+      <div className="bfl-mode-section" style={css('display:grid;gap:var(--space-2)')}>
+        <div className="bfl-mode-row" style={css('display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap')}>
           <span className="nm-label">学習モード</span>
-          <div style={css('display:inline-flex;gap:var(--space-1)')}>
+          <div className="bfl-mode-buttons" style={css('display:inline-flex;gap:var(--space-1)')}>
             {MODES.map(([k, label]) => (
               <button
                 key={k}
@@ -209,14 +209,14 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="nm-next-action" style={css('background:var(--brand-50);border-color:var(--brand-200)')}>
-        <div style={css('display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap')}>
+      <div className="nm-next-action bfl-next-action" style={css('background:var(--brand-50);border-color:var(--brand-200)')}>
+        <div className="bfl-next-heading" style={css('display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap')}>
           <h2 className="nm-section-title" style={css('margin:0')}>今日の学習</h2>
           <span className="nm-number" style={css('margin-left:auto;color:var(--text-secondary);font-size:var(--font-size-label)')}>
             基礎 {lsDone}/{LESSONS.length}　・　取引 {p.done}/{p.total}　・　ドリル {drillDoneN}/{drillTotalN}
           </span>
         </div>
-        <div style={css('display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap')}>
+        <div className="bfl-next-content" style={css('display:flex;align-items:center;gap:var(--space-4);flex-wrap:wrap')}>
           {S.guideOn && (
             <img
               src={asset(DUCK_EXPLAINING)}
@@ -228,12 +228,12 @@ export default function Dashboard() {
               onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
           )}
-          <div style={css('flex:1;min-width:14rem;display:grid;gap:var(--space-1)')}>
+          <div className="bfl-next-copy" style={css('flex:1;min-width:14rem;display:grid;gap:var(--space-1)')}>
             <span style={css('font-size:var(--font-size-label);color:var(--text-secondary)')}>{todayMsg}</span>
             <span style={css('font-size:var(--font-size-subsection);font-weight:var(--font-weight-medium)')}>{nextTitle}</span>
             <span className="nm-supporting-text">{nextReward}</span>
           </div>
-          <button className="nm-btn nm-btn--primary nm-btn--lg" onClick={goNext}>{ctaLabel}</button>
+          <button className="nm-btn nm-btn--primary nm-btn--lg bfl-next-cta" onClick={goNext}>{ctaLabel}</button>
         </div>
         {p.aprilDone && (
           <div style={css('display:flex;align-items:center;gap:var(--space-2)')}>

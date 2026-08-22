@@ -49,9 +49,9 @@ export default function ScenarioFlow() {
 
   return (
     <section data-screen-label="取引シナリオ学習" style={css('display:grid;gap:var(--space-4)')}>
-      <div style={css('display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap')}>
+      <div className="bfl-scenario-header" style={css('display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap')}>
         <button className="nm-btn nm-btn--tertiary nm-btn--sm" onClick={() => api.set({ view: 'scnList' })}>← 取引一覧</button>
-        <h1 className="nm-page-title">
+        <h1 className="nm-page-title bfl-scenario-heading">
           {isNextInSeq ? '学習 ' + learnPos + '件目／' + p.total + '　' : ''}{scn.title}
         </h1>
         <span className="nm-badge">取引No.{scn.order}</span>

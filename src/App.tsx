@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <div style={css('min-height:100vh;display:flex;flex-direction:column;font-family:var(--font-sans)')}>
-      <header className="nm-appbar" style={css('flex-wrap:wrap')}>
+      <header className="nm-appbar bfl-appbar" style={css('flex-wrap:wrap')}>
         <button
           className="nm-appbar__brand"
           onClick={goHome}
@@ -59,7 +59,7 @@ export default function App() {
           <span className="nm-number">LV.{level(S.xp)}　{S.xp.toLocaleString('ja-JP')} XP</span>
           <span>学習用サンプル</span>
         </div>
-        <div className="nm-appbar__actions" style={css('margin-left:0')}>
+        <div className="nm-appbar__actions bfl-appbar-actions" style={css('margin-left:0')}>
           <button
             className="nm-btn nm-btn--tertiary nm-btn--sm"
             onClick={() => api.set({ guide: { open: true, kind: 'menu', topic: 0, hintLv: 1 } })}
@@ -100,7 +100,7 @@ export default function App() {
 
       <TraceBar />
 
-      <main style={css('flex:1;width:100%;max-width:74rem;margin:0 auto;padding:var(--space-5) var(--space-4);display:grid;gap:var(--space-5);align-content:start')}>
+      <main className="bfl-main" style={css('flex:1;width:100%;max-width:74rem;margin:0 auto;padding:var(--space-5) var(--space-4);display:grid;gap:var(--space-5);align-content:start')}>
         {!S.ready && <p style={css('color:var(--text-muted)')}>会計エンジンを読み込み中…</p>}
         {S.ready && (
           <>

@@ -17,19 +17,20 @@ export default function ScenarioList() {
         {rows.map(s => (
           <div
             key={s.id}
+            className="bfl-scenario-row"
             style={cssWith('display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--border-default);border-radius:var(--radius-panel)', {
               borderLeft: '3px solid ' + s.blc, background: s.rowBg
             })}
           >
-            <span className="nm-number" style={css('color:var(--text-muted);width:3rem')}>{s.day}</span>
-            <div style={css('flex:1;display:grid;gap:2px')}>
-              <span style={css('font-weight:var(--font-weight-medium)')}>
+            <span className="nm-number bfl-scenario-day" style={css('color:var(--text-muted);width:3rem')}>{s.day}</span>
+            <div className="bfl-scenario-copy" style={css('flex:1;display:grid;gap:2px')}>
+              <span className="bfl-scenario-title" style={css('font-weight:var(--font-weight-medium)')}>
                 {s.order}. {s.title}　<span className="nm-badge">{s.level}</span>
               </span>
               <span className="nm-supporting-text">{s.story}</span>
             </div>
-            <span className={'nm-badge ' + s.badgeCls}>{s.badge}</span>
-            <button className={'nm-btn ' + s.btnCls} style={css('min-height:2.75rem')} onClick={s.open}>{s.btnLabel}</button>
+            <span className={'nm-badge bfl-scenario-status ' + s.badgeCls}>{s.badge}</span>
+            <button className={'nm-btn bfl-scenario-button ' + s.btnCls} style={css('min-height:2.75rem')} onClick={s.open}>{s.btnLabel}</button>
           </div>
         ))}
       </div>
