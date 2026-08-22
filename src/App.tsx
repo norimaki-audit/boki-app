@@ -12,6 +12,7 @@ import Drill from './screens/Drill';
 import FinancialStatements from './screens/FinancialStatements';
 import GeneralLedger from './screens/GeneralLedger';
 import Journal from './screens/Journal';
+import MobileBottomNav from './components/MobileBottomNav';
 import Learn from './screens/Learn';
 import Mock from './screens/Mock';
 import Notes from './screens/Notes';
@@ -51,7 +52,7 @@ export default function App() {
           </span>
           <span style={css('display:grid;gap:1px;line-height:1.2')}>
             <span style={css('font-weight:var(--font-weight-bold);font-size:1.0625rem')}>仕訳の先へ</span>
-            <span style={css('color:var(--text-muted);font-size:0.6875rem;font-weight:var(--font-weight-regular)')}>by のりまき　日商簿記3級</span>
+            <span className="bfl-brand-subtitle" style={css('color:var(--text-muted);font-size:0.6875rem;font-weight:var(--font-weight-regular)')}>by のりまき　日商簿記3級</span>
           </span>
         </button>
         <div className="bfl-appbar-meta">
@@ -63,7 +64,7 @@ export default function App() {
           <button
             className="nm-btn nm-btn--tertiary nm-btn--sm"
             onClick={() => api.set({ guide: { open: true, kind: 'menu', topic: 0, hintLv: 1 } })}
-          >？ ヘルプ</button>
+          ><span aria-hidden="true">？</span><span className="bfl-help-label">ヘルプ</span></button>
         </div>
       </header>
 
@@ -138,6 +139,7 @@ export default function App() {
       <DuckAssistant />
       <ShareModal />
       <EvidenceModal />
+      <MobileBottomNav />
     </div>
   );
 }

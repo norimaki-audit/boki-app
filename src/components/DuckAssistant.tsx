@@ -146,7 +146,7 @@ export default function DuckAssistant() {
   const toggle = () => api.set({ guide: { open: !S.guide.open, kind: 'idle', topic: 0, hintLv: 1 } });
 
   return (
-    <div style={css('position:fixed;right:1rem;bottom:1rem;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-2)')}>
+    <div className="bfl-duck-assistant" style={css('position:fixed;right:1rem;bottom:1rem;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-2)')}>
       {asstOpen && (
         <div role="dialog" aria-label="ヘルプ" className={boxCls}>
           <div style={css('display:flex;align-items:center;gap:var(--space-2)')}>
